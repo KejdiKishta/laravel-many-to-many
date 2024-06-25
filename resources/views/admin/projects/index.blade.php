@@ -26,6 +26,7 @@
                     <th scope="col">Type</th>
                     <th scope="col">Owner</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Tags</th>
                     <th scope="col">Utility</th>
                 </tr>
             </thead>
@@ -38,6 +39,18 @@
                             <td>{{ $item->type?->name }}</td>
                             <td>{{ $item->owner }}</td>
                             <td>{{ $item->description }}</td>
+                            <td>
+                                <div class="text-center">
+                                    @if ($item->tecnologies->isNotEmpty())
+                                        @foreach ($item->tecnologies as $tecnology)
+                                        
+                                            <span class="badge" style="background-color: {{ $tecnology->color }}">{{ $tecnology->name }}</span>
+                                        @endforeach
+                                    @else
+                                        -
+                                    @endif
+                                </div>
+                            </td>
                             <td class="text-nowrap">
                                 <a class="d-inline-block" href="{{ route('admin.projects.edit', ['project' => $item->slug]) }}">
                                     <button class="btn btn-warning text-white">

@@ -44,7 +44,7 @@
                 @enderror
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
-            <a href="{{ route('admin.projects.index') }}"><button class="btn btn-outline-secondary">Return</button></a>
+            <a class="btn btn-outline-secondary" href="{{ route('admin.projects.index') }}">Return</a>
         </form>
     </div>
 @endsection

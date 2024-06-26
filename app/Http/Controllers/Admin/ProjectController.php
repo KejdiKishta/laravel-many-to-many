@@ -64,7 +64,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $tags = Tecnology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'tags'));
     }
 
     /**
@@ -76,6 +77,8 @@ class ProjectController extends Controller
         $data['slug'] = Str::slug($request->title);
         $project->update($data);
 
+        $project->tecnologies()->sync($request->tags);
+
         return redirect()->route('admin.projects.index');
     }
 
@@ -85,6 +88,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+        $project->tecnologies()->detach();
         return redirect()->route('admin.projects.index')->with('message','Project ' . $project->title . ' has been removed succesfully!');
     }
 }

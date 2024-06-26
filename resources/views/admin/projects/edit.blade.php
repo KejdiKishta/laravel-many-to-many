@@ -35,6 +35,24 @@
                 @enderror
             </div>
 
+            <div class="mb-2">Tags:</div>
+            <div class="btn-group" role="group">
+                @foreach ($tags as $tag)
+
+                    @if (old('tags') !== null)
+                        <input @checked(in_array($tag->id, old('tags'))) name="tags[]" value="{{ $tag->id }}" type="checkbox" class="btn-check @error('tags') is-invalid @enderror" id="tag-{{ $tag->id }}" autocomplete="off">
+                    @else
+                        <input @checked($project->tecnologies->contains($tag)) name="tags[]" value="{{ $tag->id }}" type="checkbox" class="btn-check @error('tags') is-invalid @enderror" id="tag-{{ $tag->id }}" autocomplete="off">
+                    @endif
+
+                    <label class="btn btn-outline-primary" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                @endforeach
+            </div>
+            
+            @error('tags')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+
             <div class="form-group py-3">
                 <label for="description">Description</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"

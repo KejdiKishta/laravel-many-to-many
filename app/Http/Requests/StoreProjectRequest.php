@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|unique:projects|max:255',
+            'title' => ['required','max:255', Rule::unique('projects')->ignore($this->project)],
             'owner' => 'required|max:255',
             'description' => 'required',
             'tags' => 'nullable|exists:tecnologies,id'

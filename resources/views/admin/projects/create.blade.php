@@ -38,9 +38,12 @@
             <div class="mb-2">Tags:</div>
             <div class="btn-group" role="group">
                 @foreach ($tags as $tag)
-                    <input name="tags[]" value="{{ $tag->id }}" type="checkbox" class="btn-check" id="tag-{{ $tag->id }}" autocomplete="off">
+                    <input @checked(in_array($tag->id, old('tags', []))) name="tags[]" value="{{ $tag->id }}" type="checkbox" class="btn-check" id="tag-{{ $tag->id }}" autocomplete="off">
                     <label class="btn btn-outline-primary" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
                 @endforeach
+                @error('tags')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group py-3">

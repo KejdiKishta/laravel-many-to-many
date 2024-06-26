@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
+use App\Models\Tecnology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -26,7 +27,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $tags = Tecnology::all();
+        return view('admin.projects.create', compact('types', 'tags'));
     }
 
     /**
@@ -34,11 +36,16 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        // dd($request);
         $data = $request->all();
         $project = new Project();
         $project->fill($data);
         $project->slug = Str::slug($project->title);
         $project->save();
+
+        if ($request->has('tags')) {
+            $project->tecnologies()->attach($request->tags);
+        }
 
         return redirect()->route('admin.projects.index');
     }

@@ -54,7 +54,7 @@
                 @endforeach
             </div>
             @error('tags')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback d-block">{{ $message }}</div>
             @enderror
 
             <div class="form-group py-3">
